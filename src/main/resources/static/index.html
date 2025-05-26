@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome page</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: #f0f2f5;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        a {
+            color: #007BFF;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        a:hover {
+            color: #0056b3;
+        }
+        span {
+            margin: 5px 0;
+            padding: 10px 20px;
+        }
+        /* Border only for spans containing links, now pink */
+        span:has(a) {
+            border: 2px solid #007BFF;
+            border-radius: 6px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+<h1>Welcome to the ChatZoi</h1>
+<span>If you want to chat you have to connect</span>
+<span>Don't have an account? <a href="/register">Register</a></span>
+<span>Already have an accound? <a href="/login">Login</a></span>
+</body>
+</html>
