@@ -1,6 +1,8 @@
 package com.example.chat_26_5.controller;
 
+import com.example.chat_26_5.model.ThreadModel;
 import com.example.chat_26_5.model.UserModel;
+import com.example.chat_26_5.service.ThreadService;
 import com.example.chat_26_5.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,11 +11,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @Controller
 public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private ThreadService threadService;
+
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -40,13 +47,21 @@ public class UserController {
 
     @PostMapping("/login")
     public String login(@ModelAttribute UserModel userModel, Model model) {
-        System.out.println("register request received: " + userModel);
-        UserModel authenticate = userService.authenticate(userModel.getEmail(), userModel.getPassword());
-        if(authenticate != null){
-            model.addAttribute("userLogin", authenticate.getName());
+        System.out.println("Login request received: " + userModel);
+        UserModel authenticatedUser = userService.authenticate(userModel.getEmail(), userModel.getPassword());
+
+        if (authenticatedUser != null) {
+            model.addAttribute("userLogin", authenticatedUser.getName());
+
+            // Προσθήκη: Φέρε όλα τα threads του χρήστη
+
+            List<ThreadModel> userThreads = threadService.getThreadsByUserId(authenticatedUser.getId());
+            model.addAttribute("threads", userThreads);
+
             return "chat_page";
-        }else{
+        } else {
             return "error_page";
         }
     }
+
 }
