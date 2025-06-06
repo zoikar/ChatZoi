@@ -5,140 +5,163 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>ChatZoi</title>
     <style>
-    body {
-    margin: 0;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #fdf1f9;
-    display: flex;
-    height: 100vh;
-    overflow: hidden;
-    }
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fdf1f9;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
 
-    .sidebar {
-    width: 280px;
-    background-color: #f8e9f1;
-    border-right: 1px solid #e0b9d8;
-    display: flex;
-    flex-direction: column;
-    }
+        .sidebar {
+            width: 280px;
+            background-color: #f8e9f1;
+            border-right: 1px solid #e0b9d8;
+            display: flex;
+            flex-direction: column;
+        }
 
-    .sidebar-header {
-    padding: 1rem;
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: #7a1e7a;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #e0b9d8;
-    }
+        .sidebar-header {
+            padding: 1rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #7a1e7a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e0b9d8;
+        }
 
-    .new-thread-btn {
-    background: #d94e9c;
-    color: #fff;
-    border: none;
-    border-radius: 50%;
-    width: 32px;
-    height: 32px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    }
+        .new-thread-btn {
+            background: #d94e9c;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
 
-    .conversations-list {
-    padding: 1rem;
-    overflow-y: auto;
-    flex: 1;
-    }
+        .conversations-list {
+            padding: 1rem;
+            overflow-y: auto;
+            flex: 1;
+        }
 
-    .conversation-item {
-    background: #f3d6ea;
-    padding: 10px;
-    border-radius: 6px;
-    margin-bottom: 10px;
-    color: #5a2a5a;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    }
+        .conversation-item {
+            background: #f3d6ea;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            color: #5a2a5a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    .conversation-item.active {
-    background-color: #d94e9c;
-    color: white;
-    }
+        .conversation-item.active {
+            background-color: #d94e9c;
+            color: white;
+        }
 
-    .conversation-name {
-    flex: 1;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    }
+        .conversation-name {
+            flex: 1;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
 
-    .conversation-actions form {
-    display: inline;
-    }
+        .conversation-actions form {
+            display: inline;
+        }
 
-    .conversation-actions button {
-    background: none;
-    border: none;
-    color: #7a1e7a;
-    font-size: 1rem;
-    cursor: pointer;
-    margin-left: 5px;
-    }
+        .conversation-actions button {
+            background: none;
+            border: none;
+            color: #7a1e7a;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-left: 5px;
+        }
 
-    .main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    }
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
 
-    header {
-    padding: 1rem 2rem;
-    background-color: #f8e9f1;
-    color: #7a1e7a;
-    font-weight: bold;
-    border-bottom: 1px solid #e0b9d8;
-    }
+        header {
+            position: relative;
+            padding: 1rem 2rem;
+            background-color: #f8e9f1;
+            color: #7a1e7a;
+            font-weight: bold;
+            border-bottom: 1px solid #e0b9d8;
+            height: 60px;
 
-    .chat-container {
-    flex: 1;
-    padding: 1rem 2rem;
-    overflow-y: auto;
-    }
+            display: flex;
+            align-items: center;
+        }
 
-    .input-area {
-    padding: 1rem 2rem;
-    display: flex;
-    gap: 1rem;
-    border-top: 1px solid #e0b9d8;
-    background-color: #f8e9f1;
-    }
+        .header-left {
+            flex: 0 0 auto;
+            font-size: 1.3rem;
+        }
 
-    textarea {
-    flex: 1;
-    border-radius: 8px;
-    border: 1px solid #e0b9d8;
-    padding: 0.75rem;
-    font-size: 1rem;
-    resize: none;
-    background-color: #fff5fb;
-    color: #4a1f4a;
-    }
+        .header-center {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.2rem;
+            color: #d94e9c;
+            white-space: nowrap;
+        }
 
-    button#send-btn {
-    background-color: #d94e9c;
-    color: white;
-    border: none;
-    padding: 0 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    }
+        .header-right {
+            flex: 1 1 auto;
+        }
 
-    @media (max-width: 600px) {
-    .sidebar {
-    display: none;
-    }
-    }
+        .chat-container {
+            flex: 1;
+            padding: 1rem 2rem;
+            overflow-y: auto;
+        }
+
+        .input-area {
+            padding: 1rem 2rem;
+            display: flex;
+            gap: 1rem;
+            border-top: 1px solid #e0b9d8;
+            background-color: #f8e9f1;
+        }
+
+        textarea {
+            flex: 1;
+            border-radius: 8px;
+            border: 1px solid #e0b9d8;
+            padding: 0.75rem;
+            font-size: 1rem;
+            resize: none;
+            background-color: #fff5fb;
+            color: #4a1f4a;
+        }
+
+        button#send-btn {
+            background-color: #d94e9c;
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 600px) {
+            .sidebar {
+                display: none;
+            }
+        }
 
     </style>
 </head>
@@ -161,14 +184,17 @@
                 <form th:action="@{/threads/{id}/delete(id=${thread.id})}" method="post">
                     <button type="submit" title="Delete">🗑️</button>
                 </form>
-
             </div>
         </div>
     </div>
 </div>
 
 <div class="main">
-    <header>ChatZoi</header>
+    <header>
+        <div class="header-left">ChatZoi</div>
+        <div class="header-center" th:if="${activeThreadName}" th:text="${activeThreadName}"></div>
+        <div class="header-right"></div>
+    </header>
 
     <div class="chat-container" id="chat-container">
         <div class="message bot">Hello! How can I help you today?</div>
@@ -180,5 +206,6 @@
         <button id="send-btn">Send</button>
     </div>
 </div>
+
 </body>
 </html>

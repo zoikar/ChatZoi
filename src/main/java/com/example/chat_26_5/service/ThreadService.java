@@ -1,10 +1,13 @@
 package com.example.chat_26_5.service;
 
 import com.example.chat_26_5.model.ThreadModel;
+import com.example.chat_26_5.model.UserModel;
 import com.example.chat_26_5.repository.ThreadRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,6 +48,30 @@ public class ThreadService {
         }
         return false; // Δεν έγινε διαγραφή (είτε δεν υπάρχει, είτε δεν ανήκει στον χρήστη)
     }
+    public ThreadModel saveThread(ThreadModel thread) {
+        return threadRepository.save(thread);
+    }
+
+    public ThreadModel createNewThreadForUser(Integer userId) {
+        Integer maxThId = threadRepository.findMaxThIdByUserId(userId);
+        int nextThId = (maxThId != null ? maxThId : 0) + 1;
+
+        ThreadModel newThread = new ThreadModel();
+        newThread.setTh_name("New Chat");
+
+        // Ορισμός ημερομηνίας με μορφοποίηση d/M/yyyy
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+        newThread.setTh_created(LocalDate.now().format(formatter));
+
+        newThread.setTh_id(nextThId);
+
+        UserModel user = new UserModel();
+        user.setId(userId);
+        newThread.setUser(user);
+
+        return threadRepository.save(newThread);
+    }
+
 
 
 }

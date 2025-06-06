@@ -1,6 +1,7 @@
 package com.example.chat_26_5.controller;
 
 import com.example.chat_26_5.model.ThreadModel;
+import com.example.chat_26_5.model.UserModel;
 import com.example.chat_26_5.service.ThreadService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,6 @@ public class ThreadController {
     }
 
 
-    // Εμφάνιση thread ως ενεργό
     @GetMapping("/{id}/select")
     public String selectThread(@PathVariable Integer id, HttpSession session, Model model) {
         Integer userId = (Integer) session.getAttribute("userId");
@@ -59,6 +59,34 @@ public class ThreadController {
         List<ThreadModel> threads = threadService.getThreadsByUserId(userId);
         model.addAttribute("threads", threads);
         model.addAttribute("activeThreadId", id);
+
+        // Βρες το όνομα του ενεργού thread
+        ThreadModel activeThread = threads.stream()
+                .filter(t -> t.getId().equals(id))
+                .findFirst()
+                .orElse(null);
+
+        if (activeThread != null) {
+            model.addAttribute("activeThreadName", activeThread.getTh_name());
+        } else {
+            model.addAttribute("activeThreadName", ""); // ή "No Thread Selected"
+        }
+
         return "chat_page";
     }
+
+    @PostMapping("/create")
+    public String createNewThread(HttpSession session) {
+        Integer userId = (Integer) session.getAttribute("userId");
+        if (userId == null) {
+            return "redirect:/login";
+        }
+
+        ThreadModel newThread = threadService.createNewThreadForUser(userId);
+
+        return "redirect:/threads/" + newThread.getId() + "/select";
+    }
+
+
+
 }
