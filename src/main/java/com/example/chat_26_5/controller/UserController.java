@@ -4,6 +4,7 @@ import com.example.chat_26_5.model.ThreadModel;
 import com.example.chat_26_5.model.UserModel;
 import com.example.chat_26_5.service.ThreadService;
 import com.example.chat_26_5.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,14 +47,13 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute UserModel userModel, Model model) {
-        System.out.println("Login request received: " + userModel);
+    public String login(@ModelAttribute UserModel userModel, Model model, HttpSession session) {
         UserModel authenticatedUser = userService.authenticate(userModel.getEmail(), userModel.getPassword());
 
         if (authenticatedUser != null) {
+            session.setAttribute("user", authenticatedUser);
+            session.setAttribute("userId", authenticatedUser.getId());  // ✅ προσθήκη εδώ
             model.addAttribute("userLogin", authenticatedUser.getName());
-
-            // Προσθήκη: Φέρε όλα τα threads του χρήστη
 
             List<ThreadModel> userThreads = threadService.getThreadsByUserId(authenticatedUser.getId());
             model.addAttribute("threads", userThreads);

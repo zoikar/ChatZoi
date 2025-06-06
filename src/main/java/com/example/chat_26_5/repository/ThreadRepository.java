@@ -12,4 +12,8 @@ public interface ThreadRepository extends JpaRepository<ThreadModel, Integer> {
 
     List<ThreadModel> findAllByUser_Id(Integer userId);
 
+    List<ThreadModel> findByUserId(Integer userId);
+
+    Optional<ThreadModel> findByIdAndUserId(Integer id, Integer userId);
+
 }
