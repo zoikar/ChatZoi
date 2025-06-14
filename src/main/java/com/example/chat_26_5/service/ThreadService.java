@@ -1,7 +1,9 @@
 package com.example.chat_26_5.service;
 
+import com.example.chat_26_5.model.MessageModel;
 import com.example.chat_26_5.model.ThreadModel;
 import com.example.chat_26_5.model.UserModel;
+import com.example.chat_26_5.repository.MessageRepository;
 import com.example.chat_26_5.repository.ThreadRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,11 +19,18 @@ public class ThreadService {
     @Autowired
     private ThreadRepository threadRepository;
 
+    @Autowired
+    private MessageRepository messageRepository;
+
     public ThreadModel getThreadForUser(Integer threadId, Integer userId) {
         threadRepository.findByIdAndUser_Id(threadId,userId)
                 .orElseThrow(() -> new RuntimeException("Thread not found for this user"));
         System.out.println("Thread found for this user " + threadId + " " + userId);
         return null;
+    }
+
+    public List<MessageModel> getMessagesForThreadAndUser(Integer threadId, Integer userId) {
+        return messageRepository.findAllByThread_IdAndUser_Id(threadId, userId);
     }
 
     public void deleteThreadById(Integer id) {
@@ -57,13 +66,13 @@ public class ThreadService {
         int nextThId = (maxThId != null ? maxThId : 0) + 1;
 
         ThreadModel newThread = new ThreadModel();
-        newThread.setTh_name("New Chat");
+        newThread.setTh_name("New Chat " + nextThId);
 
         // Ορισμός ημερομηνίας με μορφοποίηση d/M/yyyy
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
         newThread.setTh_created(LocalDate.now().format(formatter));
 
-        newThread.setTh_id(nextThId);
+        newThread.setThread_id(nextThId);
 
         UserModel user = new UserModel();
         user.setId(userId);

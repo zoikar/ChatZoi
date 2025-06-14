@@ -1,5 +1,6 @@
 package com.example.chat_26_5.controller;
 
+import com.example.chat_26_5.model.MessageModel;
 import com.example.chat_26_5.model.ThreadModel;
 import com.example.chat_26_5.model.UserModel;
 import com.example.chat_26_5.service.ThreadService;
@@ -20,6 +21,9 @@ public class ThreadController {
     @Autowired
     private ThreadService threadService;
 
+    /*@Autowired
+    private MessageService messageService;*/
+
     // Προβολή συγκεκριμένου thread (π.χ. μέσω API)
     @GetMapping("/{threadId}/user/{userId}")
     public ResponseEntity<ThreadModel> getThread(
@@ -27,6 +31,7 @@ public class ThreadController {
             @PathVariable Integer userId) {
 
         ThreadModel thread = threadService.getThreadForUser(threadId, userId);
+        //MessageModel message = messageService.getMessagesForUser();
         return ResponseEntity.ok(thread);
     }
 
@@ -56,11 +61,12 @@ public class ThreadController {
             return "redirect:/login";
         }
 
+        // Φόρτωσε τα threads του χρήστη
         List<ThreadModel> threads = threadService.getThreadsByUserId(userId);
         model.addAttribute("threads", threads);
         model.addAttribute("activeThreadId", id);
 
-        // Βρες το όνομα του ενεργού thread
+        // Βρες το ενεργό thread και βάλε το όνομά του
         ThreadModel activeThread = threads.stream()
                 .filter(t -> t.getId().equals(id))
                 .findFirst()
@@ -69,11 +75,16 @@ public class ThreadController {
         if (activeThread != null) {
             model.addAttribute("activeThreadName", activeThread.getTh_name());
         } else {
-            model.addAttribute("activeThreadName", ""); // ή "No Thread Selected"
+            model.addAttribute("activeThreadName", "");
         }
 
-        return "chat_page";
+        // Φόρτωσε τα μηνύματα του ενεργού thread
+        List<MessageModel> messages = threadService.getMessagesForThreadAndUser(id, userId);
+        model.addAttribute("messages", messages);
+
+        return "chat_page";  // Το όνομα του Thymeleaf template σου
     }
+
 
     @PostMapping("/create")
     public String createNewThread(HttpSession session) {

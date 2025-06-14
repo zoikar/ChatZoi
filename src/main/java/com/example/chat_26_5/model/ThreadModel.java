@@ -13,7 +13,7 @@ public class ThreadModel {
 
     private String th_created;
 
-    private Integer th_id;
+    private Integer thread_id;
 
     private String th_name;
 
@@ -37,12 +37,12 @@ public class ThreadModel {
         this.th_created = th_created;
     }
 
-    public Integer getTh_id() {
-        return th_id;
+    public Integer getThread_id() {
+        return thread_id;
     }
 
-    public void setTh_id(Integer th_id) {
-        this.th_id = th_id;
+    public void setThread_id(Integer thread_id) {
+        this.thread_id = thread_id;
     }
 
     public String getTh_name() {
@@ -65,12 +65,12 @@ public class ThreadModel {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         ThreadModel that = (ThreadModel) o;
-        return Objects.equals(id, that.id) && Objects.equals(th_created, that.th_created) && Objects.equals(th_id, that.th_id) && Objects.equals(th_name, that.th_name) && Objects.equals(user, that.user);
+        return Objects.equals(id, that.id) && Objects.equals(th_created, that.th_created) && Objects.equals(thread_id, that.thread_id) && Objects.equals(th_name, that.th_name) && Objects.equals(user, that.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, th_created, th_id, th_name, user);
+        return Objects.hash(id, th_created, thread_id, th_name, user);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class ThreadModel {
         return "ThreadModel{" +
                 "id=" + id +
                 ", th_created='" + th_created + '\'' +
-                ", th_id=" + th_id +
+                ", thread_id=" + thread_id +
                 ", th_name='" + th_name + '\'' +
                 ", user=" + user +
                 '}';

@@ -147,9 +147,9 @@
             border-bottom-right-radius: 4px;
         }
 
-        .message.bot {
+        .message.ai {
             align-self: flex-start;
-            background-color: #f3d6ea;
+            background-color: #e0b9d8;
             color: #4a1f4a;
             border-bottom-left-radius: 4px;
         }
@@ -222,8 +222,12 @@
     </header>
 
     <div class="chat-container" id="chat-container">
-        <div class="message bot">Hello! How can I help you today?</div>
-        <div class="message user">Hi! Can you help me build a chat page?</div>
+        <th:block th:each="message : ${messages}">
+            <div class="message" th:classappend="${message.sender == 'ai'} ? ' ai' : ' user'">
+                <span th:text="${message.content}"></span>
+                <span th:text="${#temporals.format(message.date, 'dd/MM/yyyy HH:mm')}" style="font-size:0.8rem; opacity:0.6; display:block; margin-top:4px;"></span>
+            </div>
+        </th:block>
     </div>
 
     <div class="input-area">

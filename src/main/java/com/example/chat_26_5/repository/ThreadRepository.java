@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ThreadRepository extends JpaRepository<ThreadModel, Integer> {
-    Optional<ThreadModel> findByIdAndUser_Id(Integer th_id, Integer userId);
+    Optional<ThreadModel> findByIdAndUser_Id(Integer thread_id, Integer userId);
 
     List<ThreadModel> findAllByUser_Id(Integer userId);
 
@@ -18,6 +18,6 @@ public interface ThreadRepository extends JpaRepository<ThreadModel, Integer> {
 
     Optional<ThreadModel> findByIdAndUserId(Integer id, Integer userId);
 
-    @Query("SELECT COALESCE(MAX(t.th_id), 0) FROM ThreadModel t WHERE t.user.id = :userId")
+    @Query("SELECT COALESCE(MAX(t.thread_id), 0) FROM ThreadModel t WHERE t.user.id = :userId")
     Integer findMaxThIdByUserId(@Param("userId") Integer userId);
 }
