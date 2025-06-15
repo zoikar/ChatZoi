@@ -1,14 +1,31 @@
-This is the first update of the ChatZoi. ChatZoi is a project like chatgpt where the user can register/login and chat with an ai.
+Bootcamp 25.03 - final project - Karagianni Zoi
 
-First Update
-This first update has the backend and frontend of the register and login
+This is the read me file for the project I created called ChatZoi. ChatZoi is another version of a basic ai chat, where the user registers and can chat with an ai, create new threads, delete old ones and change their basic information if they please. Below is a basic layout of the project.
 
-![The main page](https://github.com/user-attachments/assets/0596ac43-99da-406e-99b3-090ddc102434)
+Firstly, when the user runs the project they see this page
 
-![Register page](https://github.com/user-attachments/assets/2b05b9fd-ccb0-453a-919c-77f9e1a55b0a)
+![main page](https://github.com/user-attachments/assets/6b052eab-69b8-4ccb-8ab5-8e0a96d88d58)
 
-![Login page](https://github.com/user-attachments/assets/3016cd7b-52ec-4628-a95c-19c571677469)
+They can choose to either register or login. If they choose to register they navigate to the following page.
 
-The information of the users are stored in a db in postgres.
+![register page](https://github.com/user-attachments/assets/b692bdd3-82c7-4dd4-806d-a81c91692a22)
 
-When the user logins they go to the chat page that at the moment looks like this ![chat-page](https://github.com/user-attachments/assets/5fdfb8ee-9e01-4070-956c-e6cda46b0e95) but it doesn't do anything yet.
+and if they choose to login they navigate to this page.
+
+![login](https://github.com/user-attachments/assets/a333392f-2f7a-408f-b70f-db3ecb7b47df)
+
+When it is the first time that the user logins in the application they see the following image. On the left there is the conversations side where the user can click on the + button to add a new thread. On the top there is a bar with the name of the application and to the left there is a button that navigates to the users profile. When the user creates a thread and clicks on it, the name of that thread will be displayed in the middle of the top bar. To the bottom there is the text area with the send button and to the middle is where the conversations will appear.
+
+![blank chat page](https://github.com/user-attachments/assets/e458320f-47e9-4dca-b72e-67eef201fc3f)
+
+![chat page with threads and texts](https://github.com/user-attachments/assets/81431d8e-3ec5-47f7-8a93-c8b91d47839a)
+
+If the user clicks on the top right icon they navigate to the profile section where they can edit their information (name, email, password) or they can logout.
+
+![profile page](https://github.com/user-attachments/assets/2be0c12e-5ff8-42f7-8939-4511f3dbfa59)
+
+![settings page](https://github.com/user-attachments/assets/9a379618-a29b-453a-8e67-a28d97064cc6)
+
+
+
+This is a very simple version of the app. In the future more modifications will happen.
