@@ -1,7 +1,6 @@
 package com.example.chat_26_5.repository;
 
 import com.example.chat_26_5.model.ThreadModel;
-import com.example.chat_26_5.model.UserModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

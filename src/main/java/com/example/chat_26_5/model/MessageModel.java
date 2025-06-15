@@ -3,6 +3,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Getter
 @Entity
@@ -13,17 +14,33 @@ public class MessageModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(columnDefinition = "TEXT")
     private String content;
     private String sender;
     private LocalDateTime date;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "thread_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "thread_id")
+    @JsonBackReference
     private ThreadModel thread;
+
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private UserModel user;
+
+    public MessageModel(Integer id, String content, String sender, LocalDateTime date, ThreadModel thread, UserModel user) {
+        this.id = id;
+        this.content = content;
+        this.sender = sender;
+        this.date = date;
+        this.thread = thread;
+        this.user = user;
+    }
+
+    public MessageModel() {
+
+    }
 
     public Integer getId() {
         return id;

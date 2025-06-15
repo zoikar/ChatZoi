@@ -52,7 +52,7 @@ public class UserController {
 
         if (authenticatedUser != null) {
             session.setAttribute("user", authenticatedUser);
-            session.setAttribute("userId", authenticatedUser.getId());  // ✅ προσθήκη εδώ
+            session.setAttribute("userId", authenticatedUser.getId());
             model.addAttribute("userLogin", authenticatedUser.getName());
 
             List<ThreadModel> userThreads = threadService.getThreadsByUserId(authenticatedUser.getId());
@@ -63,5 +63,78 @@ public class UserController {
             return "error_page";
         }
     }
+
+    @GetMapping("/profile_page")
+    public String showProfile(Model model, HttpSession session) {
+        UserModel user = (UserModel) session.getAttribute("user");
+
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        model.addAttribute("user", user);
+        return "profile_page";
+    }
+
+    @PostMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/login";
+    }
+
+    @GetMapping("/settings")
+    public String getSettingsPage(Model model, HttpSession session) {
+        UserModel user = (UserModel) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
+        model.addAttribute("user", user);
+        return "settings";
+    }
+
+    @PostMapping("/profile/update")
+    public String updateProfile(@ModelAttribute UserModel formUser, HttpSession session, Model model) {
+        UserModel loggedUser = (UserModel) session.getAttribute("user");
+        if (loggedUser == null) {
+            return "redirect:/login";
+        }
+
+        UserModel userFromDb = userService.findById(loggedUser.getId());
+        if (userFromDb == null) {
+            return "error_page";
+        }
+
+        userFromDb.setName(formUser.getName());
+        userFromDb.setEmail(formUser.getEmail());
+
+        if (formUser.getPassword() != null && !formUser.getPassword().isEmpty()) {
+            userFromDb.setPassword(formUser.getPassword());
+        }
+
+        userService.save(userFromDb);
+
+        session.setAttribute("user", userFromDb);
+
+        model.addAttribute("user", userFromDb);
+        model.addAttribute("successMessage", "Profile updated successfully!");
+
+        return "profile_page";
+    }
+
+    @GetMapping("/chat_page")
+    public String showChatPage(Model model, HttpSession session) {
+        UserModel user = (UserModel) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        List<ThreadModel> userThreads = threadService.getThreadsByUserId(user.getId());
+        model.addAttribute("threads", userThreads);
+        model.addAttribute("user", user);
+
+        return "chat_page";
+    }
+
+
 
 }

@@ -38,7 +38,7 @@ public class ThreadService {
     }
 
     public List<ThreadModel> getAllThreads() {
-        return threadRepository.findAll(); // Παίρνει όλα τα threads από τη βάση
+        return threadRepository.findAll(); 
     }
 
     public List<ThreadModel> getThreadsByUserId(Integer userId) {
@@ -55,7 +55,7 @@ public class ThreadService {
             threadRepository.delete(threadOpt.get());
             return true;
         }
-        return false; // Δεν έγινε διαγραφή (είτε δεν υπάρχει, είτε δεν ανήκει στον χρήστη)
+        return false; 
     }
     public ThreadModel saveThread(ThreadModel thread) {
         return threadRepository.save(thread);
@@ -68,7 +68,7 @@ public class ThreadService {
         ThreadModel newThread = new ThreadModel();
         newThread.setTh_name("New Chat " + nextThId);
 
-        // Ορισμός ημερομηνίας με μορφοποίηση d/M/yyyy
+        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
         newThread.setTh_created(LocalDate.now().format(formatter));
 

@@ -120,8 +120,18 @@
 
         .header-right {
             flex: 1 1 auto;
+            display: flex;
+            justify-content: flex-end;
         }
 
+        .menu-link {
+            color: #7a1e7a;
+            text-decoration: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
         .chat-container {
             flex: 1;
             padding: 1rem 2rem;
@@ -218,7 +228,9 @@
     <header>
         <div class="header-left">ChatZoi</div>
         <div class="header-center" th:if="${activeThreadName}" th:text="${activeThreadName}"></div>
-        <div class="header-right"></div>
+        <div class="header-right">
+            <a href="/profile_page" id="menu-btn" class="menu-link" aria-haspopup="true" aria-expanded="false">☰</a>
+        </div>
     </header>
 
     <div class="chat-container" id="chat-container">
@@ -235,6 +247,61 @@
         <button id="send-btn">Send</button>
     </div>
 </div>
+
+<script>
+    document.getElementById("send-btn").addEventListener("click", async () => {
+        const input = document.getElementById("chat-input");
+        const text = input.value.trim();
+        if (!text) return;
+
+        const threadId = [[${activeThreadId}]];
+        const userId = [[${session.userId}]];
+
+        addMessageToChat(text, "user");
+
+        input.value = "";
+
+        try {
+            const response = await fetch(`/api/chatbot/send?threadId=${threadId}&userId=${userId}&message=${encodeURIComponent(text)}`, {
+                method: "POST",
+            });
+
+            if (!response.ok) throw new Error("Failed to get AI response");
+
+            const data = await response.json();
+            addMessageToChat(data.content, "ai");
+
+            scrollChatToBottom();
+
+        } catch (err) {
+            addMessageToChat("Error getting AI response", "ai");
+        }
+    });
+
+    function addMessageToChat(text, sender) {
+        const container = document.getElementById("chat-container");
+        const div = document.createElement("div");
+        div.classList.add("message");
+        div.classList.add(sender === "ai" ? "ai" : "user");
+        div.textContent = text;
+        container.appendChild(div);
+        scrollChatToBottom();
+    }
+
+    function scrollChatToBottom() {
+        const container = document.getElementById("chat-container");
+        container.scrollTop = container.scrollHeight;
+    }
+
+    document.getElementById("chat-input").addEventListener("keydown", (event) => {
+        if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault();  
+            document.getElementById("send-btn").click(); 
+        }
+    });
+
+</script>
+
 
 </body>
 </html>

@@ -2,7 +2,10 @@ package com.example.chat_26_5.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.util.List;
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Getter
 @Entity
 @Table(name = "thread_table")
@@ -20,6 +23,18 @@ public class ThreadModel {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private UserModel user;
+
+    @OneToMany(mappedBy = "thread", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<MessageModel> messages;
+
+    public List<MessageModel> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<MessageModel> messages) {
+        this.messages = messages;
+    }
 
     public Integer getId() {
         return id;

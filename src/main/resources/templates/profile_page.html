@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Profile | ChatZoi</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff5fb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      position: relative; 
+    }
+
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background-color: #d94e9c;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+      z-index: 10;
+    }
+    .back-button:hover {
+      background-color: #c63d8b;
+    }
+
+    .profile-card {
+      background-color: #ffffff;
+      border-radius: 20px;
+      padding: 2rem;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .avatar {
+      margin-bottom: 1rem;
+    }
+
+    .avatar i {
+      color: #d94e9c;
+    }
+
+    h2 {
+      margin: 0.5rem 0 0.2rem;
+      color: #7a1e7a;
+      font-size: 1.8rem;
+    }
+
+    p {
+      margin: 0;
+      color: #4a1f4a;
+      font-size: 1rem;
+      opacity: 0.8;
+    }
+
+    .btn-group {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .btn {
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    .btn-edit {
+      background-color: #d94e9c;
+      color: white;
+    }
+
+    .btn-edit:hover {
+      background-color: #c63d8b;
+    }
+
+    .btn-logout {
+      background-color: #f3d6ea;
+      color: #7a1e7a;
+    }
+
+    .btn-logout:hover {
+      background-color: #e0b9d8;
+    }
+  </style>
+</head>
+<body>
+
+<a href="/chat_page" class="back-button">Back to Chat</a>
+
+<div class="profile-card">
+  <div class="avatar">
+    <i class="fas fa-user-circle fa-7x"></i>
+  </div>
+  <h2 th:text="${user.name}">Όνομα Χρήστη</h2>
+  <p th:text="${user.email}">email@example.com</p>
+
+  <div class="btn-group">
+    <a th:href="@{/settings}" class="btn btn-edit">Edit Profile</a>
+    <form th:action="@{/logout}" method="post" style="display: inline;">
+      <button type="submit" class="btn btn-logout">Logout</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>

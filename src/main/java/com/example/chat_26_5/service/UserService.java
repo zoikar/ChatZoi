@@ -31,4 +31,13 @@ public class UserService {
     public UserModel authenticate(String email, String password){
         return userRepository.findByEmailAndPassword(email, password).orElse(null);
     }
+
+    public UserModel findById(Integer id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    public UserModel save(UserModel user) {
+        return userRepository.save(user);
+    }
+
 }
